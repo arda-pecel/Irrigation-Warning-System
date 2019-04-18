@@ -1,0 +1,79 @@
+////////////////////////////////////////
+/*
+   Author: Arda Peçel
+   Project: Irrigation Warning System
+   Date: 18.04.2019
+   Version: v0.2
+*/
+////////////////////////////////////////
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+const int prob = A0;
+
+int olcum_sonucu;
+int buton=8;
+int buzzer=9;
+
+LiquidCrystal_I2C lcd(0x3f, 16, 2);
+
+void setup() {
+  pinMode(buzzer,OUTPUT);
+  pinMode(buton,INPUT);
+  lcd.begin();
+Serial.begin(9600);
+}
+
+void loop() {
+  olcum_sonucu = analogRead(prob);
+
+  Serial.print("dryness of soil ");
+  Serial.println(olcum_sonucu);
+  Serial.println("-------------");
+  delay(500);
+
+  lcd.home();
+  lcd.print("dryness:");
+  lcd.setCursor(9, 0);
+  lcd.print(olcum_sonucu);
+
+  if (olcum_sonucu <=400)
+  {
+    lcd.setCursor(0, 1);
+    lcd.print("status:wet      ");
+  }
+  
+  else if (olcum_sonucu <=650)
+  {
+    lcd.setCursor(0, 1);
+    lcd.print("status:normal   ");
+    
+    
+    
+  }
+
+  else if (olcum_sonucu <=1230)
+  {
+    lcd.setCursor(1, 1);
+    lcd.print("status:dry     ");
+
+
+    int durum; 
+    durum = digitalRead(buton);
+    Serial.println(durum);
+    if (durum==1)
+    {
+      digitalWrite(buzzer,LOW);
+    }
+    else 
+    {
+    digitalWrite(buzzer,HIGH);
+    delay(750);
+    digitalWrite(buzzer,LOW);
+    }
+    
+    
+  }
+
+}
