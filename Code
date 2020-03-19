@@ -22,7 +22,9 @@ int durum;
 LiquidCrystal_I2C lcd(0x3f, 16, 2);
 dht DHT;
 
-void setup() {
+void setup() 
+
+{
   pinMode(buzzer,OUTPUT);
   pinMode(buton,INPUT);
   lcd.begin();
@@ -38,7 +40,7 @@ void loop() {
   delay(500);
 
   lcd.home();
-  lcd.print("dryness:     ");
+  lcd.print("dryness:           ");
   lcd.setCursor(9, 0);
   lcd.print(olcum_sonucu);
 
@@ -47,18 +49,18 @@ void loop() {
     if(digitalRead(buton1)==0)
     {
     lcd.setCursor(0, 1);
-    lcd.print("status:wet      ");
+    lcd.print("status:wet       ");
     }
     else if (digitalRead(buton1)==1)
     {
     int chk = DHT.read11(DHT11_PIN);
     lcd.setCursor(0,0); 
-    lcd.print("Temp: ");
+    lcd.print("Temp:         ");
     lcd.print(DHT.temperature);
     lcd.print((char)223);
     lcd.print("C");
     lcd.setCursor(0,1);
-    lcd.print("Humidity: ");
+    lcd.print("Humidity:     ");
     lcd.print(DHT.humidity);
     lcd.print("%");
     delay(1000);
@@ -76,19 +78,20 @@ void loop() {
     {
     int chk = DHT.read11(DHT11_PIN);
     lcd.setCursor(0,0); 
-    lcd.print("Temp: ");
+    lcd.print("Temp:         ");
     lcd.print(DHT.temperature);
     lcd.print((char)223);
     lcd.print("C");
     lcd.setCursor(0,1);
-    lcd.print("Humidity: ");
+    lcd.print("Humidity:     ");
     lcd.print(DHT.humidity);
     lcd.print("%");
     delay(1000);
     }    
     digitalWrite(buzzer,HIGH);
-    delay(750);
+    delay(500);
     digitalWrite(buzzer,LOW);
+    delay(2500);  
   }
 
   else if (olcum_sonucu <=1230)
@@ -96,21 +99,22 @@ void loop() {
     if(digitalRead(buton1)==0)
     {
     lcd.setCursor(0, 1);
-    lcd.print("status:dry     ");
+    lcd.print("status:dry      ");
     digitalWrite(buzzer,HIGH);
-    delay(750);
+    delay(500);
     digitalWrite(buzzer,LOW);
+    delay(2500);
     }
     else if (digitalRead(buton1)==1)
     {
     int chk = DHT.read11(DHT11_PIN);
     lcd.setCursor(0,0); 
-    lcd.print("Temp:        ");
+    lcd.print("Temp:      ");
     lcd.print(DHT.temperature);
     lcd.print((char)223);
     lcd.print("C");
     lcd.setCursor(0,1);
-    lcd.print("Humidity:    ");
+    lcd.print("Humidity:  ");
     lcd.print(DHT.humidity);
     lcd.print("%");
     delay(1000);
